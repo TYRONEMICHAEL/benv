@@ -45,6 +45,34 @@ describe('benv.teardown', function() {
   });
 });
 
+describe('benv.teardown', function() {
+
+  beforeEach(function(done) {
+    benv.setup(function(){
+      benv.expose({
+        $: require('./libs/jquery.js')
+      });
+      done();
+    });
+  });
+
+  afterEach(function() {
+    benv.teardown();
+  });
+  
+  it('add html to the body', function(done) {
+    $('body').html('You guys do great work');
+    document.getElementsByTagName('body')[0].innerHTML.should.equal($('body').html());
+    done();
+  });
+
+  it('previous document still intact', function(done) {
+    document.getElementsByTagName('body')[0].innerHTML.should.equal($('body').html());
+    done();
+  });
+
+});
+
 describe('benv.require', function() {
 
   it('can require a non-commonjs module', function(done) {
